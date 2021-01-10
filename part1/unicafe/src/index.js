@@ -33,12 +33,19 @@ const App = () => {
       <Button handleClick={increaseValue(neutral, setNeutral)} text="neutral"/>
       <Button handleClick={increaseValue(bad, setBad)} text="bad"/>
       <h1>statistics</h1>
-      <ShowStatistic statName="good" statVal={good} />
-      <ShowStatistic statName="neutral" statVal={neutral} />
-      <ShowStatistic statName="bad" statVal={bad} />
-      <ShowStatistic statName="all" statVal={good + neutral + bad} />
-      <ShowStatistic statName="average" statVal={getAverage()} />
-      <ShowStatistic statName="positive" statVal={`${getPosPercentage()} %`} />
+      {good + neutral + bad === 0 ? (
+        <p>No feedback given</p>
+      ) : (
+        <div>
+          <ShowStatistic statName="good" statVal={good} />
+          <ShowStatistic statName="neutral" statVal={neutral} />
+          <ShowStatistic statName="bad" statVal={bad} />
+          <ShowStatistic statName="all" statVal={good + neutral + bad} />
+          <ShowStatistic statName="average" statVal={getAverage()} />
+          <ShowStatistic statName="positive" statVal={`${getPosPercentage()} %`} />  
+        </div>
+      )}
+      
     </div>
   )
 }
