@@ -28,9 +28,9 @@ const App = (props) => {
   }
 
   const handleVote = () => {
-    const copy = [...points]
-    copy[selected] += 1
-    setPoints(copy)
+    const newPoints = [...points]
+    newPoints[selected] += 1
+    setPoints(newPoints)
     if (!points[highestPoint] || points[selected] + 1 > points[highestPoint] ) {
       setHighestPoint(selected)
     }
@@ -43,7 +43,8 @@ const App = (props) => {
         text={props.anecdotes[selected]}
         votes={points[selected]}
       />
-      <button onClick={handleVote}>vote</button><button onClick={handleNext}>next anecdote</button>
+      <button onClick={handleVote}>vote</button>
+      <button onClick={handleNext}>next anecdote</button>
       <h1>Anecdote with most votes</h1>
       <Anecdote
         text={props.anecdotes[highestPoint]}
