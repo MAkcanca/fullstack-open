@@ -20,9 +20,9 @@ const App = (props) => {
   const [highestPoint, setHighestPoint] = useState(0)
 
   const handleNext = () => {
-    let random = Math.floor(Math.random() * anecdotes.length)
+    let random = Math.floor(Math.random() * props.anecdotes.length)
     while (random === selected) {
-      random = Math.floor(Math.random() * anecdotes.length)
+      random = Math.floor(Math.random() * props.anecdotes.length)
     }
     setSelected(random)
   }
