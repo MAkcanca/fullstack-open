@@ -1,0 +1,10 @@
+note over browser:
+HTTP POST contains 
+note data taken from user
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP 201, {"message":"note created"}
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
