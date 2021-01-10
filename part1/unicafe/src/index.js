@@ -18,6 +18,14 @@ const App = () => {
     return () => setValue(valueToIncrease + 1)
   }
 
+  const getAverage = () => {
+    return ((good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad) ) || 0
+  }
+
+  const getPosPercentage = () => {
+    return (good / (good + neutral + bad)) * 100 || 0
+  }
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -28,6 +36,9 @@ const App = () => {
       <ShowStatistic statName="good" statVal={good} />
       <ShowStatistic statName="neutral" statVal={neutral} />
       <ShowStatistic statName="bad" statVal={bad} />
+      <ShowStatistic statName="all" statVal={good + neutral + bad} />
+      <ShowStatistic statName="average" statVal={getAverage()} />
+      <ShowStatistic statName="positive" statVal={`${getPosPercentage()} %`} />
     </div>
   )
 }
