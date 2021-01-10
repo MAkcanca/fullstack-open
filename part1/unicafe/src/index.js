@@ -5,7 +5,12 @@ const Button = ({handleClick, text}) => {
   return <button onClick={handleClick}>{text}</button>
 }
 const ShowStatistic = ({statName, statVal}) => {
-  return <p>{statName} {statVal}</p>
+  return (
+  <tr>
+    <td>{statName}</td>
+    <td>{statVal}</td>
+  </tr>
+  )
 }
 
 const App = () => {
@@ -36,14 +41,16 @@ const App = () => {
       {good + neutral + bad === 0 ? (
         <p>No feedback given</p>
       ) : (
-        <div>
+        <table>
+          <tbody>
           <ShowStatistic statName="good" statVal={good} />
           <ShowStatistic statName="neutral" statVal={neutral} />
           <ShowStatistic statName="bad" statVal={bad} />
           <ShowStatistic statName="all" statVal={good + neutral + bad} />
           <ShowStatistic statName="average" statVal={getAverage()} />
           <ShowStatistic statName="positive" statVal={`${getPosPercentage()} %`} />  
-        </div>
+          </tbody>
+        </table>
       )}
       
     </div>
