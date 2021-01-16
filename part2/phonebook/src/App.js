@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+
+const Notification = ({ message }) => {
+  if (message == null) {
+    return null
+  }
+
+  return (
+    <div className={message.isError ? "error" : "success"}>
+      {message.content}
+    </div>
+  )
+}
+
 const Filter = ({filter, onHandle}) => {
   return (
     <div>
@@ -40,6 +53,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newPhone, setNewPhone ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState()
 
   useEffect(() => {
     personService
@@ -70,17 +84,33 @@ const App = () => {
     personService
       .create(personObj)
       .then(response => {
+        createNotification(`Added ${personObj.name}`)
         setPersons(persons.concat(response.data))
         setNewName('')
         setNewPhone('')
       })
   }
 
+  const createNotification = (message, isError=false) => {
+    const msgObj = {
+      content: message,
+      isError: isError
+    }
+    setNotificationMessage(msgObj)
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
+  }
+  
+
   const updatePerson = (id, newObject) => {
     personService
       .update(id, newObject)
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+      })
+      .catch(error => {
+        createNotification(`${newObject.name} was already edited in server`, true)
       })
   }
   
@@ -91,6 +121,9 @@ const App = () => {
       personService
         .deleteEntry(id)
         .then(_ => setPersons(persons.filter(n => n.id !== id)))
+        .catch(error => {
+          createNotification(`${person.name} was already deleted from server`, true)
+        })
     }
   }
   
@@ -100,6 +133,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} />
       <Filter onHandle={handleFilterChange} filter={filter} />
 
       <h2>Add a new</h2>
